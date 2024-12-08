@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1>Edit Article</h1>
+
+<form action="{{ url_for('edit_article', id=id) }}" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}  <!-- Renders the CSRF token -->
+
+    <!-- Title -->
+    <div class="form-group">
+        <label for="title">Title</label>
+        {{ form.title(class="form-control", placeholder="Enter article title") }}
+        {% if form.title.errors %}
+            <div class="text-danger">
+                {% for error in form.title.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Body -->
+    <div class="form-group">
+        <label for="body">Body</label>
+        <div id="editor"></div>
+        <input type="hidden" name="body" id="body">  <!-- Hidden field to hold the Quill editor content -->
+        {% if form.body.errors %}
+            <div class="text-danger">
+                {% for error in form.body.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Submit Article</button>
+</form>
+
+<!-- Quill.js Editor Setup -->
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        placeholder: 'Write your article...',
+        modules: {
+            toolbar: [
+                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['bold', 'italic', 'underline'],
+                ['link'],
+                [{ 'align': [] }],
+                ['image']
+            ]
+        }
+    });
+
+    // Prepopulate the editor with existing content
+    quill.root.innerHTML = `{{ form.body.data | safe }}`;
+
+    // Handle form submission and set the body field value
+    var form = document.querySelector('form');
+    form.onsubmit = function() {
+        var bodyInput = document.querySelector('input[name="body"]');
+        bodyInput.value = quill.root.innerHTML;
+    };
+</script>
+
+{% endblock %}

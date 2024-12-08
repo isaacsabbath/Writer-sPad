@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% for article in articles %}
+                <div class="article">
+                    <h1 class="text-center">{{ article.title }}</h1>
+                    <small class="d-block text-center">Written by {{ article.author }} on {{ article.create_date }}</small>
+                    <hr>
+                    <div class="article-body">
+                        <p>{{ article.body | safe }}</p>
+                    </div>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
