@@ -15,10 +15,10 @@ app = Flask(__name__)
 app.secret_key = 'secret123'
 #Config mySQL
 
-app.config['MYSQL_HOST'] = ['myflaskapp.mysql.database.azure.com']
-app.config ['MYSQL_USER'] = ['isaac']
-app.config['MYSQL_PASSWORD'] = ['Richard002']
-app.config['MYSQL_DB'] = ['myflaskapp']
+app.config['MYSQL_HOST'] = 'myflaskapp.mysql.database.azure.com'
+app.config ['MYSQL_USER'] = 'isaac'
+app.config['MYSQL_PASSWORD'] = 'Richard002'
+app.config['MYSQL_DB'] = 'myflaskapp'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 # Initialise mysql
