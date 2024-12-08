@@ -7,16 +7,20 @@ from werkzeug.utils import secure_filename
 from passlib.hash import sha256_crypt
 from functools import wraps
 from flask_wtf import FlaskForm
-
+hostname=myflaskapp.mysql.database.azure.com
+port=3306
+username=isaac
+password={your-password}
+ssl-mode=require
 
 
 app = Flask(__name__)
 app.secret_key = 'secret123'
 #Config mySQL
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config ['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'richard002'
+app.config['MYSQL_HOST'] = 'myflaskapp.mysql.database.azure.com'
+app.config ['MYSQL_USER'] = 'isaac'
+app.config['MYSQL_PASSWORD'] = 'Richard002'
 app.config['MYSQL_DB'] = 'myflaskapp'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -299,7 +303,7 @@ def delete_article(id):
     cur.execute("DELETE FROM articles WHERE id=%s", [id])
 
     mysql.connection.commit()
-    
+
     cur.close()
 
     flash('Article Deleted!', 'success')
